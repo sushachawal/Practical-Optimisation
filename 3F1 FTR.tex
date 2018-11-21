@@ -1,0 +1,403 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[12pt]{article}
+\usepackage[latin9]{luainputenc}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\onehalfspacing
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\textwidth 15.5cm \oddsidemargin 0cm \topmargin -1cm \textheight
+23cm \footskip 1.0cm \usepackage{epsfig}
+\usepackage{graphicx}\usepackage{psfrag}\usepackage[numbered, framed]{matlab-prettifier}\usepackage{pstcol}\def\n{\noindent}
+\def\u{\underline}
+\def\hs{\hspace}
+\newcommand{\thrfor}{.^{\displaystyle .} .}
+\newcommand{\bvec}[1]{{\bf #1}}
+\usepackage{layout}
+
+\makeatother
+
+\usepackage{listings}
+\lstset{style={Matlab-editor}}
+\begin{document}
+\noindent \rule{15.7cm}{0.5mm}
+\begin{center}
+\textbf{ENGINEERING TRIPOS PART II A} 
+\par\end{center}
+
+\vspace{0.5cm}
+ \textbf{EIETL \hfill{}MODULE EXPERIMENT 3F1} \vspace{0.5cm}
+ 
+\begin{center}
+\textbf{FLIGHT CONTROL}\\
+\textbf{FULL TECHNICAL REPORT}\\
+\textbf{\hfill{}}\\
+\textbf{Name: Sushant Achawal}\\
+\textbf{\hfill{}}\\
+\textbf{ College: Emmanuel College}\\
+\textbf{\hfill{}}\\
+\par\end{center}
+
+\rule{15.7cm}{0.5mm}
+\begin{abstract}
+Control systems are important all over Engineering, from the inverted
+pendulum to regulating levels during drug administration. These systems
+are often difficult to measure without uncertainty so methods must
+be developed to understand their behaviour as well as being able to
+control them to a desired result. In this experiment, Control Theory
+is investigated in the context of flight control through a flight
+simulator software in MATLAB. Systems are linearised and transfer
+funtions are modelled using techniques such as Nyquist diagrams and
+Bode plots. The varied behaviours of different transfer functions
+are evaluated. A technique is developed to model the user as a controller
+and then effective PID control is investigated using Ziegler-Nichols
+tuning rules. Various themes of control are explored including the
+discretisation, unstable poles as well as a comparison of parametric
+and non-parametric Ziegler-Nichols tuning rules.\pagebreak{}
+\end{abstract}
+
+\section{Introduction}
+
+This experiment broadly illustrates methods of modelling and better
+understanding the behaviour of systems in both the discrete and continuous
+time so that effective controllers maybe implemented. The aims of
+the experiment can be summarised as follows:
+\begin{enumerate}
+\item Investigate the behaviour of various models for a flight including
+limits of stability.
+\item Develop an understanding of how the pilot behaves as a controller
+and the effects of changing various parameters in the model for the
+pilot on the behaviour of the system.
+\item Developing a suitable autopilot for a flight using a Proportional-Integral-Derivative
+(PID) controller and exploring limitations and methods of tuning of
+this controller.
+\end{enumerate}
+
+\section{Experimental Work}
+
+In this experiment, MATLAB was used to model transfer functions for
+flights and a GUI was developed to allow the user to easily act as
+the controller. Figure \ref{fig:GUI} shows the window that the user
+interacts with. 
+\begin{figure}[H]
+\textit{\caption{A graphic of the GUI used in the experiment\label{fig:GUI}}
+}
+\centering{}\includegraphics[scale=0.4,bb = 0 0 200 100, draft, type=eps]{GUI.png}
+\end{figure}
+The aim of the controller is to keep the red line (which represents
+the horizon) as close to the center as possible and definitely within
+$\pm10$ green divisions from the centre position (failing this the
+simulation ends). The actuator output, $u(t)$, is given by the position
+of the user's mouse with the system responding to the change and the
+position of the red line moving. Thus, the user's response is in continuous
+time with the digital system in code responding at discrete-time intervals.
+\\
+The position of the user's mouse and the position of the red line
+are plotted against time and the resulting graph is displayed. Modelling
+the user as a proportional controller with a delay allows a bode plot
+to be generated from which specific readings can be taken using the
+Data Cursor function in MATLAB. This allows the stability margins
+to be determined as well as other gain and phase values that can be
+used in the analysis. Further detailed instructions for each section
+of the experiment can be found in the lab handout attached as an Appendix.
+
+\section{Theory}
+
+The general system modelled in MATLAB, with the controller and plant,
+can be seen in the Introduction of the lab handout which has been
+attached as an Appendix. The closed-loop response is determined from
+the open-loop response using tools such as Nyquist Diagrams and Bode
+Plots. The analysis of the system via transfer functions is valid
+because the system is linear and time-invariant. Intuitively, many
+systems in reality are not linear but they can be linearised under
+the right assumptions (for example $\sin\theta=\theta$ for small
+$\theta$). This kind of linearisation has been performed in the generation
+of the transfer functions used to generate the flight models. The
+criteria a good controller satisfies is described in the Appendix.
+\textbf{Further details of all control theory can be found in the
+lab handout.}
+
+\section{Results}
+
+\textbf{Results for the experiment can be found in the figures contained
+in the report attached as an Appendix.}
+
+\section{Discussion}
+
+\subsection{Sinusoidal Disturbances}
+
+\begin{onehalfspace}
+To calculate the complex value of $K(j\omega_{1})G(j\omega_{1})$,
+the calculated values for gain and phase are taken from the Worksheet
+in the Appendix and converted into the form $a+bi$. This gives a
+complex value of $0.689+2.7447j$. Figure \ref{fig:Argand-Diagram}
+shows the locus of points with stabilising gain as a solid line and
+shows $|1+K(j\omega)G(j\omega)|$ for two valid points with dashed
+lines. The value for $|1+K(j\omega_{1})G(j\omega_{1})|$ is $3.222$
+which suggests that the closed loop will be attenuating. It follows
+that the closed-loop will be attenuating for all $\omega$ since the
+gain of the closed-loop transfer function is given by: 
+\[
+\frac{|K(j\omega)G(j\omega)|}{|1+K(j\omega)G(j\omega)|}
+\]
+ and a simple geometric analysis shows that $|1+K(j\omega)G(j\omega)|>|K(j\omega)G(j\omega)|$
+for all valid $\omega$ and $K$.
+\end{onehalfspace}
+
+\begin{figure}[H]
+\textit{\caption{Argand Diagram showing $K(j\omega_{1})G(j\omega_{1})$ and $|1+K(j\omega)G(j\omega)|$\textbf{\label{fig:Argand-Diagram}}}
+}
+\centering{}\includegraphics[scale=0.4,bb = 0 0 200 100, draft, type=eps]{sinatten.png}
+\end{figure}
+ 
+
+\subsection{Further analysis of the unstable aircraft}
+
+Section 2.3 of the Appendix gives an unstable open loop transfer function:
+\[
+G_{2}(s)=\frac{2}{-1+sT}
+\]
+with a time delay, $D$ this transfer function becomes:
+
+\[
+G_{2}(s)=\frac{2e^{-Ds}}{-1+sT}
+\]
+For the closed loop to be stable, the Nyquist diagram should have
+one encirclement of the point $(\frac{-1}{K},0j)$. From the transfer
+function, the Nyquist plot can be generated for the two cases ($D>T$
+and $T>D$). These are shown in Figure \ref{fig:Nyquist-plots}.
+
+\begin{figure}
+\caption{Nyquist plots for ($D>T$), left and ($T>D$), right\label{fig:Nyquist-plots}}
+\centering{}\includegraphics[scale=0.75,bb = 0 0 200 100, draft, type=eps]{NyquistDT.png}
+\end{figure}
+A more analytical solution is to form the closed loop transfer function
+and find the limit when the poles will be unstable. Thus the closed
+loop transfer function is given by:
+\[
+G_{cl}(s)=\frac{2e^{-sD}}{-1+Ts+2e^{-Ds}}
+\]
+with poles satisfying $2e^{-Ds}-1+Ts=0$. The solution is difficult
+to determine analytically but it is true that the limiting case is
+when the line $y=1-Ts$ is tangent to the curve $2e^{-Ds}$. Enforcing
+the equality of the first derivatives for tangency and solving for
+$s$ gives:
+\[
+s_{tan}=\frac{1}{D}\ln\left(\frac{D}{T}\right)
+\]
+For the system to be unstable, $s_{tan}>0$. Which from the above
+equation clearly gives that $D>T$.
+
+\subsection{Broom Balancing}
+
+Section 2.4 in the Appendix refers to finding the fastest unstable
+pole that can be controlled for the unstable aircraft as being analagous
+to finding the shortest length of broom that can be balanced. The
+equations are given as follows:
+
+\begin{align}
+\ddot{x}+L\ddot{\theta} & =g\theta\label{eq:1}\\
+x+L\theta & =y\label{eq:2}\\
+y+T\dot{y} & =z\label{eq:3}
+\end{align}
+Equation \ref{eq:1} comes from the linearised dynamic equations of
+the system, equation \ref{eq:2} from the measurement of the horizontal
+displacement at the top of the rod and equation \ref{eq:3} from the
+proportional, derivative feedback signal generated. Taking laplace
+transforms and rearranging gives:
+
+\begin{align}
+\bar{\theta}(s) & =\bar{x}(s)\left(\frac{s^{2}}{g-Ls^{s}}\right)\label{eq:thetax}\\
+\bar{y}(s) & =\bar{x}(s)+L\bar{\theta}(s)\label{eq:yxtheta}\\
+\bar{z(s)} & =\bar{y}(1+Ts)\label{eq:zy}
+\end{align}
+where $T^{2}=L/g$. Now, putting (\ref{eq:thetax}) in (\ref{eq:yxtheta})
+and then (\ref{eq:yxtheta}) into (\ref{eq:zy}) to eliminate $y$
+and $\theta$ gives:
+\begin{align*}
+\bar{z}(s) & =\bar{x}(s)\frac{g(1+Ts)}{g-Ls}\\
+G(s) & =\frac{1+Ts}{1-T^{2}s^{2}}\\
+G(s) & =\frac{1}{1-Ts}
+\end{align*}
+This is just half of the negative value of the transfer function for
+the unstable aircraft. Assuming this proportional gain can be accounted
+for in the controller, the smallest value of T that can be stabilised
+is given by the results obtained in the experiment for the unstable
+aircraft i.e. $T=0.3s$. Since $T^{2}=L/g$, the shortest value of
+$L$ that can be stabilised is 88.3cm. This seems like a reasonable
+value as it is considered impressive online to balance a broom about
+this length while sitting on a couch for around 19 minutes and has
+not, as of yet, been beaten.\textsuperscript{\cite{key-16} }(This
+source does not standardise the length of broom between competitors
+as they have unfortunately not applied control theory to the problem).
+
+\subsection{Ziegler-Nichols rules for tuning PID controllers}
+
+The two principle methods of tuning are based on the two different
+sets of parameters used to describe the system: 
+\begin{enumerate}
+\item Using the proportional gain at the point where the \textit{closed-loop}
+system just oscillates and the time period of oscillations, stated
+by Ziegler-Nichols as $S_{u}$ , the ``ultimate sensitivity'' and
+$P_{u}$, the period of oscillation respectively.\textsuperscript{\cite{key-18} }If
+the PID controller is described as in (3.1) in Section 3.1 of the
+Appendix then the values for $K_{p}=0.6S_{u},\ T_{i}=0.5P_{u},\ T_{d}=0.125P_{u}$.
+This method is described in literature as non-parametric.\textsuperscript{\cite{key-17}}
+\item Perturbing the \textit{open-loop} system with a small impulse and
+measuring the rate of response at the inflection point of the curve,
+$R$ and the time delay in starting the response, $L$. These parameters
+are better illustrated in Figure \ref{fig:Reaction-curve}. The optimal
+values are then given as follows: $K_{p}=\frac{1.2}{R_{1}L},\ T_{i}=2L,\ T_{d}=0.5L$.
+This method is described in literature as parametric.\textsuperscript{\cite{key-17}}
+\begin{figure}[H]
+\textit{\caption{Reaction curve taken from \cite{key-18} showing the physical meaning
+of the parameters, R and L\label{fig:Reaction-curve}}
+}
+\centering{}\includegraphics[scale=0.6,bb = 0 0 200 100, draft, type=eps]{Screen Shot 2017-11-30 at 15.13.50.png}
+\end{figure}
+\end{enumerate}
+These values attempt to provide a good load disturbance rejection
+performance which means they often give poor damping ratios.\textsuperscript{\cite{key-17}}The
+advantages and disadvantages of these two methods stems from the domain
+in which the parameters for the system are determined. For a non-parametric
+model, the parameters and tuning are done on the \textit{closed-loop}
+so if the transfer function of the plant is not known, the tuning
+will guarantee stability for a given gain margin under proportional
+control only. Furthermore, more practically, the controller and plant
+do not need to be disconnected in order to tune the controller. Some
+response about the open-loop system is required for the parametric
+method. If the open loop transfer function of the plant is well-defined
+then the tuning factors can be determined more quickly from the transfer
+function itself. This can be helpful when dealing with a system that
+is not necessarily easy to access regularly for measurements. Thus
+depending on the nature of the system (well-defined or not) the appropriate
+tuning method should be used.
+
+\subsection{Discretised PID controller}
+
+The formula for calculating the integral and derivative were as follows:
+
+\[
+d=\frac{e_{\tau}-e_{\tau-1}}{T},\;i=i_{\tau-1}+e_{\tau}T
+\]
+taking Z-transforms yields:
+
+\begin{align*}
+\begin{alignedat}{1}D(z)= & \frac{E(z)-z^{-1}E(z)}{T}\\
+\implies\frac{D(z)}{E(z)}= & \frac{1-z^{-1}}{T}
+\end{alignedat}
+\; & \begin{alignedat}{1}I(z)= & Iz^{-1}+E(z)T\\
+\implies\frac{I(z)}{E(z)}= & \frac{T}{1-z^{-1}}
+\end{alignedat}
+\end{align*}
+Therefore, to obtain the transfer function, plug $s=\frac{1-z^{-1}}{T}$
+into the continuous-time transfer function to yield:
+\[
+G(z)=K_{p}\left(1+\frac{T}{T_{i}(1-z^{-1})}+T_{d}\left(\frac{1-z^{-1}}{T}\right)\right)
+\]
+This method of differentiation (and discretisation by algebraic substitution)
+is called the backward Euler method\textsuperscript{\cite{key-15}}
+and is always stable since Figure \ref{fig:BackEuler} shows that
+it always maps within the unit-circle.
+\begin{figure}[H]
+\centering{}\textit{\caption{The locus of points given by the transfer funtion of the Backward
+Euler method\label{fig:BackEuler}}
+}\includegraphics[scale=0.6,bb = 0 0 200 100, draft, type=eps]{BackEuler.png}
+\end{figure}
+It is worth noting that had the integral been calculated using a different
+method (trapezium rule) then the simple algebraic transformation would
+not have sufficed in giving the discrete-time transfer function.
+
+\subsection{Discretisation of blocks with time delays}
+
+From the block diagram for discretisation given in Figure 2, page
+10 of the lab handout in the Appendix, the following result is obtained:
+
+\[
+G(z)=\frac{1}{\bar{u}(z)}\mathcal{Z\left[L\mathrm{^{-1}}\left(\mathrm{\textrm{\ensuremath{\frac{e^{-D_{1}s}}{s}\bar{u}}(s)}}\right)_{\textrm{t=kT}}\right]}
+\]
+
+For a zero-order hold it is best to use input, $u(t)=1$. Taking the
+laplace transform and Z-transform of this and plugging into the transfer
+function, gives:
+\[
+G(z)=\frac{z^{-D_{1}}T}{z-1}
+\]
+and using the expansion of $D_{1}$ as $D_{0}+nT$ the following result
+is obtained:
+
+\[
+G(z)=\frac{z^{-D_{0}}z^{-nT}T}{z-1}
+\]
+If the open-loop function is simply calculated excluding the time
+delay and then added back in, the error will be of order $z^{-D_{0}}$
+in the Z-domain. This suggests that if the time-delay is close to
+an integer value of the sampling time, i.e. $D_{0}$ small, then both
+methods yield good results. The smaller the sampling time, the better
+the approximation as the term in the numerator has increasingly negligible
+effect. For ease of calculation, adding an integer time delay is definitely
+easier since there is limited precision required.
+
+\subsection{Analysis of the PID controller with a lag}
+
+Care must be taken when using \texttt{bodedisp.m} on the product of
+the controller including the delay and the plant. Due to the nature
+of a zero-hold, applying the same tuning paramters of a continuous-time
+PID controller to a discrete-time PID controller means that effectively
+a time delay of $T/2$. This means that \texttt{bodedisp.m }is likely
+to have a greater error since $T/2$ is as far away from the integer
+time period as possible! An additional delay in this case may also
+cause instability. It is possible to modify this by analysing the
+system in state-space or by modifying \texttt{bodedisp.m }so that
+a greater precision is used (i.e. more resolution than an integer
+time period).
+
+\section{Conclusions}
+\begin{enumerate}
+\item User flight control can be appropriately modelled as a proportional
+gain with a time delay.
+\item The stability of a single unstable pole system, is compromised if
+a delay is introduced that is greater than the time period of the
+pole.
+\item Similar analysis of one control system can be used to predict the
+behaviour of another if they both have similar transfer functions.
+\item Additional considerations are required when using a PID contoller
+such as the saturation of actuator signals that occur from limitations
+in reality.
+\item Ziegler-Nichols tuning rules can be used in two forms with advantages
+based on the nature of the control system being described.
+\item Discretisation of time-delay systems can be difficult due to the interaction
+between the sampling time and the time delay.
+\item PID controllers tuned to time delay systems in continuous time behave
+differently when discretised and choosing a suitable sampling time
+can reduce the severity of such problems.
+\end{enumerate}
+\begin{thebibliography}{1}
+\bibitem{key-15}Forni F. 2017, lecture notes distributed in 3F1:
+Signals and Systems, Lecture 9: Infinite Impulse Response Filters.
+Available from: https://www.vle.cam.ac.uk/
+
+\bibitem{key-16}McManaman D. 2011. \textit{Longest Time To Balance
+Broom On Hand While Sitting On Couch }{[}Online{]}. Record Setter.
+Available at: https://recordsetter.com/world-record/balance-broom-hand-while-sitting-couch/9156.
+{[}Accessed 30/11/2017{]}.
+
+\bibitem{key-18}Ziegler, J.G. and Nichols, N.B., 1942. \textit{Optimum
+settings for automatic controllers}. trans. ASME, 64(11). {[}Accessed
+Online 30/11/2017{]}
+
+\bibitem{key-17}Visioli, A., 2010. \textit{Control of Integral Processes
+with Dead Time}. Springer, London {[}Accessed Online 30/11/2017{]}
+\end{thebibliography}
+
+\end{document}

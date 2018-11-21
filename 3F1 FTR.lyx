@@ -1,0 +1,1331 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\textwidth 15.5cm \oddsidemargin 0cm \topmargin -1cm \textheight
+23cm \footskip 1.0cm \usepackage{epsfig}
+\usepackage{graphicx}\usepackage{psfrag}\usepackage[numbered, framed]{matlab-prettifier}\usepackage{pstcol}\def\n{\noindent}
+\def\u{\underline}
+\def\hs{\hspace}
+\newcommand{\thrfor}{.^{\displaystyle .} .}
+\newcommand{\bvec}[1]{{\bf #1}}
+\usepackage{layout}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "style={Matlab-editor}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\noindent
+\begin_inset CommandInset line
+LatexCommand rule
+width "15.7cm"
+height "0.5mm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+ENGINEERING TRIPOS PART II A
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 0.5cm
+\end_inset
+
+ 
+\series bold
+EIETL 
+\begin_inset space \hfill{}
+\end_inset
+
+MODULE EXPERIMENT 3F1
+\series default
+ 
+\begin_inset VSpace 0.5cm
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+FLIGHT CONTROL
+\begin_inset Newline newline
+\end_inset
+
+FULL TECHNICAL REPORT
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Name: Sushant Achawal
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ College: Emmanuel College
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset line
+LatexCommand rule
+width "15.7cm"
+height "0.5mm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Control systems are important all over Engineering, from the inverted pendulum
+ to regulating levels during drug administration.
+ These systems are often difficult to measure without uncertainty so methods
+ must be developed to understand their behaviour as well as being able to
+ control them to a desired result.
+ In this experiment, Control Theory is investigated in the context of flight
+ control through a flight simulator software in MATLAB.
+ Systems are linearised and transfer funtions are modelled using techniques
+ such as Nyquist diagrams and Bode plots.
+ The varied behaviours of different transfer functions are evaluated.
+ A technique is developed to model the user as a controller and then effective
+ PID control is investigated using Ziegler-Nichols tuning rules.
+ Various themes of control are explored including the discretisation, unstable
+ poles as well as a comparison of parametric and non-parametric Ziegler-Nichols
+ tuning rules.
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This experiment broadly illustrates methods of modelling and better understandin
+g the behaviour of systems in both the discrete and continuous time so that
+ effective controllers maybe implemented.
+ The aims of the experiment can be summarised as follows:
+\end_layout
+
+\begin_layout Enumerate
+Investigate the behaviour of various models for a flight including limits
+ of stability.
+\end_layout
+
+\begin_layout Enumerate
+Develop an understanding of how the pilot behaves as a controller and the
+ effects of changing various parameters in the model for the pilot on the
+ behaviour of the system.
+\end_layout
+
+\begin_layout Enumerate
+Developing a suitable autopilot for a flight using a Proportional-Integral-Deriv
+ative (PID) controller and exploring limitations and methods of tuning of
+ this controller.
+\end_layout
+
+\begin_layout Section
+Experimental Work
+\end_layout
+
+\begin_layout Standard
+In this experiment, MATLAB was used to model transfer functions for flights
+ and a GUI was developed to allow the user to easily act as the controller.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GUI"
+
+\end_inset
+
+ shows the window that the user interacts with.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\shape italic
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A graphic of the GUI used in the experiment
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GUI"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename GUI.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The aim of the controller is to keep the red line (which represents the
+ horizon) as close to the center as possible and definitely within 
+\begin_inset Formula $\pm10$
+\end_inset
+
+ green divisions from the centre position (failing this the simulation ends).
+ The actuator output, 
+\begin_inset Formula $u(t)$
+\end_inset
+
+, is given by the position of the user's mouse with the system responding
+ to the change and the position of the red line moving.
+ Thus, the user's response is in continuous time with the digital system
+ in code responding at discrete-time intervals.
+ 
+\begin_inset Newline newline
+\end_inset
+
+The position of the user's mouse and the position of the red line are plotted
+ against time and the resulting graph is displayed.
+ Modelling the user as a proportional controller with a delay allows a bode
+ plot to be generated from which specific readings can be taken using the
+ Data Cursor function in MATLAB.
+ This allows the stability margins to be determined as well as other gain
+ and phase values that can be used in the analysis.
+ Further detailed instructions for each section of the experiment can be
+ found in the lab handout attached as an Appendix.
+\end_layout
+
+\begin_layout Section
+Theory
+\end_layout
+
+\begin_layout Standard
+The general system modelled in MATLAB, with the controller and plant, can
+ be seen in the Introduction of the lab handout which has been attached
+ as an Appendix.
+ The closed-loop response is determined from the open-loop response using
+ tools such as Nyquist Diagrams and Bode Plots.
+ The analysis of the system via transfer functions is valid because the
+ system is linear and time-invariant.
+ Intuitively, many systems in reality are not linear but they can be linearised
+ under the right assumptions (for example 
+\begin_inset Formula $\sin\theta=\theta$
+\end_inset
+
+ for small 
+\begin_inset Formula $\theta$
+\end_inset
+
+).
+ This kind of linearisation has been performed in the generation of the
+ transfer functions used to generate the flight models.
+ The criteria a good controller satisfies is described in the Appendix.
+ 
+\series bold
+Further details of all control theory can be found in the lab handout.
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Results for the experiment can be found in the figures contained in the
+ report attached as an Appendix.
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Subsection
+Sinusoidal Disturbances
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+To calculate the complex value of 
+\begin_inset Formula $K(j\omega_{1})G(j\omega_{1})$
+\end_inset
+
+, the calculated values for gain and phase are taken from the Worksheet
+ in the Appendix and converted into the form 
+\begin_inset Formula $a+bi$
+\end_inset
+
+.
+ This gives a complex value of 
+\begin_inset Formula $0.689+2.7447j$
+\end_inset
+
+.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Argand-Diagram"
+
+\end_inset
+
+ shows the locus of points with stabilising gain as a solid line and shows
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $|1+K(j\omega)G(j\omega)|$
+\end_inset
+
+ for two valid points with dashed lines.
+ The value for 
+\begin_inset Formula $|1+K(j\omega_{1})G(j\omega_{1})|$
+\end_inset
+
+ is 
+\begin_inset Formula $3.222$
+\end_inset
+
+ which suggests that the closed loop will be attenuating.
+ It follows that the closed-loop will be attenuating for all 
+\begin_inset Formula $\omega$
+\end_inset
+
+ since the gain of the closed-loop transfer function is given by: 
+\begin_inset Formula 
+\[
+\frac{|K(j\omega)G(j\omega)|}{|1+K(j\omega)G(j\omega)|}
+\]
+
+\end_inset
+
+ and a simple geometric analysis shows that 
+\begin_inset Formula $|1+K(j\omega)G(j\omega)|>|K(j\omega)G(j\omega)|$
+\end_inset
+
+ for all valid 
+\begin_inset Formula $\omega$
+\end_inset
+
+ and 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\shape italic
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Argand Diagram showing 
+\begin_inset Formula $K(j\omega_{1})G(j\omega_{1})$
+\end_inset
+
+ and 
+\begin_inset Formula $|1+K(j\omega)G(j\omega)|$
+\end_inset
+
+
+\series bold
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Argand-Diagram"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename sinatten.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+Further analysis of the unstable aircraft
+\end_layout
+
+\begin_layout Standard
+Section 2.3 of the Appendix gives an unstable open loop transfer function:
+\begin_inset Formula 
+\[
+G_{2}(s)=\frac{2}{-1+sT}
+\]
+
+\end_inset
+
+with a time delay, 
+\begin_inset Formula $D$
+\end_inset
+
+ this transfer function becomes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G_{2}(s)=\frac{2e^{-Ds}}{-1+sT}
+\]
+
+\end_inset
+
+For the closed loop to be stable, the Nyquist diagram should have one encircleme
+nt of the point 
+\begin_inset Formula $(\frac{-1}{K},0j)$
+\end_inset
+
+.
+ From the transfer function, the Nyquist plot can be generated for the two
+ cases (
+\begin_inset Formula $D>T$
+\end_inset
+
+ and 
+\begin_inset Formula $T>D$
+\end_inset
+
+).
+ These are shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nyquist-plots"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Nyquist plots for (
+\begin_inset Formula $D>T$
+\end_inset
+
+), left and (
+\begin_inset Formula $T>D$
+\end_inset
+
+), right
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nyquist-plots"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename NyquistDT.png
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+A more analytical solution is to form the closed loop transfer function
+ and find the limit when the poles will be unstable.
+ Thus the closed loop transfer function is given by:
+\begin_inset Formula 
+\[
+G_{cl}(s)=\frac{2e^{-sD}}{-1+Ts+2e^{-Ds}}
+\]
+
+\end_inset
+
+with poles satisfying 
+\begin_inset Formula $2e^{-Ds}-1+Ts=0$
+\end_inset
+
+.
+ The solution is difficult to determine analytically but it is true that
+ the limiting case is when the line 
+\begin_inset Formula $y=1-Ts$
+\end_inset
+
+ is tangent to the curve 
+\begin_inset Formula $2e^{-Ds}$
+\end_inset
+
+.
+ Enforcing the equality of the first derivatives for tangency and solving
+ for 
+\begin_inset Formula $s$
+\end_inset
+
+ gives:
+\begin_inset Formula 
+\[
+s_{tan}=\frac{1}{D}\ln\left(\frac{D}{T}\right)
+\]
+
+\end_inset
+
+For the system to be unstable, 
+\begin_inset Formula $s_{tan}>0$
+\end_inset
+
+.
+ Which from the above equation clearly gives that 
+\begin_inset Formula $D>T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Broom Balancing
+\end_layout
+
+\begin_layout Standard
+Section 2.4 in the Appendix refers to finding the fastest unstable pole that
+ can be controlled for the unstable aircraft as being analagous to finding
+ the shortest length of broom that can be balanced.
+ The equations are given as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\ddot{x}+L\ddot{\theta} & =g\theta\label{eq:1}\\
+x+L\theta & =y\label{eq:2}\\
+y+T\dot{y} & =z\label{eq:3}
+\end{align}
+
+\end_inset
+
+Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1"
+
+\end_inset
+
+ comes from the linearised dynamic equations of the system, equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:2"
+
+\end_inset
+
+ from the measurement of the horizontal displacement at the top of the rod
+ and equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:3"
+
+\end_inset
+
+ from the proportional, derivative feedback signal generated.
+ Taking laplace transforms and rearranging gives:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\bar{\theta}(s) & =\bar{x}(s)\left(\frac{s^{2}}{g-Ls^{s}}\right)\label{eq:thetax}\\
+\bar{y}(s) & =\bar{x}(s)+L\bar{\theta}(s)\label{eq:yxtheta}\\
+\bar{z(s)} & =\bar{y}(1+Ts)\label{eq:zy}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $T^{2}=L/g$
+\end_inset
+
+.
+ Now, putting (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:thetax"
+
+\end_inset
+
+) in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:yxtheta"
+
+\end_inset
+
+) and then (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:yxtheta"
+
+\end_inset
+
+) into (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:zy"
+
+\end_inset
+
+) to eliminate 
+\begin_inset Formula $y$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta$
+\end_inset
+
+ gives:
+\begin_inset Formula 
+\begin{align*}
+\bar{z}(s) & =\bar{x}(s)\frac{g(1+Ts)}{g-Ls}\\
+G(s) & =\frac{1+Ts}{1-T^{2}s^{2}}\\
+G(s) & =\frac{1}{1-Ts}
+\end{align*}
+
+\end_inset
+
+This is just half of the negative value of the transfer function for the
+ unstable aircraft.
+ Assuming this proportional gain can be accounted for in the controller,
+ the smallest value of T that can be stabilised is given by the results
+ obtained in the experiment for the unstable aircraft i.e.
+ 
+\begin_inset Formula $T=0.3s$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $T^{2}=L/g$
+\end_inset
+
+, the shortest value of 
+\begin_inset Formula $L$
+\end_inset
+
+ that can be stabilised is 88.3cm.
+ This seems like a reasonable value as it is considered impressive online
+ to balance a broom about this length while sitting on a couch for around
+ 19 minutes and has not, as of yet, been beaten.
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-16"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+(This source does not standardise the length of broom between competitors
+ as they have unfortunately not applied control theory to the problem).
+\end_layout
+
+\begin_layout Subsection
+Ziegler-Nichols rules for tuning PID controllers
+\end_layout
+
+\begin_layout Standard
+The two principle methods of tuning are based on the two different sets
+ of parameters used to describe the system: 
+\end_layout
+
+\begin_layout Enumerate
+Using the proportional gain at the point where the 
+\shape italic
+closed-loop
+\shape default
+ system just oscillates and the time period of oscillations, stated by Ziegler-N
+ichols as 
+\begin_inset Formula $S_{u}$
+\end_inset
+
+ , the 
+\begin_inset Quotes eld
+\end_inset
+
+ultimate sensitivity
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Formula $P_{u}$
+\end_inset
+
+, the period of oscillation respectively.
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-18"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+If the PID controller is described as in (3.1) in Section 3.1 of the Appendix
+ then the values for 
+\begin_inset Formula $K_{p}=0.6S_{u},\ T_{i}=0.5P_{u},\ T_{d}=0.125P_{u}$
+\end_inset
+
+.
+ This method is described in literature as non-parametric.
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-17"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Perturbing the 
+\shape italic
+open-loop
+\shape default
+ system with a small impulse and measuring the rate of response at the inflectio
+n point of the curve, 
+\begin_inset Formula $R$
+\end_inset
+
+ and the time delay in starting the response, 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ These parameters are better illustrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Reaction-curve"
+
+\end_inset
+
+.
+ The optimal values are then given as follows: 
+\begin_inset Formula $K_{p}=\frac{1.2}{R_{1}L},\ T_{i}=2L,\ T_{d}=0.5L$
+\end_inset
+
+.
+ This method is described in literature as parametric.
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-17"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\shape italic
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Reaction curve taken from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-18"
+
+\end_inset
+
+ showing the physical meaning of the parameters, R and L
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Reaction-curve"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Screen Shot 2017-11-30 at 15.13.50.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+These values attempt to provide a good load disturbance rejection performance
+ which means they often give poor damping ratios.
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-17"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The advantages and disadvantages of these two methods stems from the domain
+ in which the parameters for the system are determined.
+ For a non-parametric model, the parameters and tuning are done on the 
+\shape italic
+closed-loop
+\shape default
+ so if the transfer function of the plant is not known, the tuning will
+ guarantee stability for a given gain margin under proportional control
+ only.
+ Furthermore, more practically, the controller and plant do not need to
+ be disconnected in order to tune the controller.
+ Some response about the open-loop system is required for the parametric
+ method.
+ If the open loop transfer function of the plant is well-defined then the
+ tuning factors can be determined more quickly from the transfer function
+ itself.
+ This can be helpful when dealing with a system that is not necessarily
+ easy to access regularly for measurements.
+ Thus depending on the nature of the system (well-defined or not) the appropriat
+e tuning method should be used.
+\end_layout
+
+\begin_layout Subsection
+Discretised PID controller
+\end_layout
+
+\begin_layout Standard
+The formula for calculating the integral and derivative were as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+d=\frac{e_{\tau}-e_{\tau-1}}{T},\;i=i_{\tau-1}+e_{\tau}T
+\]
+
+\end_inset
+
+taking Z-transforms yields:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\begin{alignedat}{1}D(z)= & \frac{E(z)-z^{-1}E(z)}{T}\\
+\implies\frac{D(z)}{E(z)}= & \frac{1-z^{-1}}{T}
+\end{alignedat}
+\; & \begin{alignedat}{1}I(z)= & Iz^{-1}+E(z)T\\
+\implies\frac{I(z)}{E(z)}= & \frac{T}{1-z^{-1}}
+\end{alignedat}
+\end{align*}
+
+\end_inset
+
+Therefore, to obtain the transfer function, plug 
+\begin_inset Formula $s=\frac{1-z^{-1}}{T}$
+\end_inset
+
+ into the continuous-time transfer function to yield:
+\begin_inset Formula 
+\[
+G(z)=K_{p}\left(1+\frac{T}{T_{i}(1-z^{-1})}+T_{d}\left(\frac{1-z^{-1}}{T}\right)\right)
+\]
+
+\end_inset
+
+This method of differentiation (and discretisation by algebraic substitution)
+ is called the backward Euler method
+\begin_inset script superscript
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-15"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ and is always stable since Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:BackEuler"
+
+\end_inset
+
+ shows that it always maps within the unit-circle.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+
+\shape italic
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The locus of points given by the transfer funtion of the Backward Euler
+ method
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BackEuler"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\shape default
+
+\begin_inset Graphics
+	filename BackEuler.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+It is worth noting that had the integral been calculated using a different
+ method (trapezium rule) then the simple algebraic transformation would
+ not have sufficed in giving the discrete-time transfer function.
+\end_layout
+
+\begin_layout Subsection
+Discretisation of blocks with time delays
+\end_layout
+
+\begin_layout Standard
+From the block diagram for discretisation given in Figure 2, page 10 of
+ the lab handout in the Appendix, the following result is obtained:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G(z)=\frac{1}{\bar{u}(z)}\mathcal{Z\left[L\mathrm{^{-1}}\left(\mathrm{\textrm{\frac{e^{-D_{1}s}}{s}\bar{u}(s)}}\right)_{\textrm{t=kT}}\right]}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a zero-order hold it is best to use input, 
+\begin_inset Formula $u(t)=1$
+\end_inset
+
+.
+ Taking the laplace transform and Z-transform of this and plugging into
+ the transfer function, gives:
+\begin_inset Formula 
+\[
+G(z)=\frac{z^{-D_{1}}T}{z-1}
+\]
+
+\end_inset
+
+and using the expansion of 
+\begin_inset Formula $D_{1}$
+\end_inset
+
+ as 
+\begin_inset Formula $D_{0}+nT$
+\end_inset
+
+ the following result is obtained:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G(z)=\frac{z^{-D_{0}}z^{-nT}T}{z-1}
+\]
+
+\end_inset
+
+If the open-loop function is simply calculated excluding the time delay
+ and then added back in, the error will be of order 
+\begin_inset Formula $z^{-D_{0}}$
+\end_inset
+
+ in the Z-domain.
+ This suggests that if the time-delay is close to an integer value of the
+ sampling time, i.e.
+ 
+\begin_inset Formula $D_{0}$
+\end_inset
+
+ small, then both methods yield good results.
+ The smaller the sampling time, the better the approximation as the term
+ in the numerator has increasingly negligible effect.
+ For ease of calculation, adding an integer time delay is definitely easier
+ since there is limited precision required.
+\end_layout
+
+\begin_layout Subsection
+Analysis of the PID controller with a lag
+\end_layout
+
+\begin_layout Standard
+Care must be taken when using 
+\family typewriter
+bodedisp.m
+\family default
+ on the product of the controller including the delay and the plant.
+ Due to the nature of a zero-hold, applying the same tuning paramters of
+ a continuous-time PID controller to a discrete-time PID controller means
+ that effectively a time delay of 
+\begin_inset Formula $T/2$
+\end_inset
+
+.
+ This means that 
+\family typewriter
+bodedisp.m 
+\family default
+is likely to have a greater error since 
+\begin_inset Formula $T/2$
+\end_inset
+
+ is as far away from the integer time period as possible! An additional
+ delay in this case may also cause instability.
+ It is possible to modify this by analysing the system in state-space or
+ by modifying 
+\family typewriter
+bodedisp.m 
+\family default
+so that a greater precision is used (i.e.
+ more resolution than an integer time period).
+\end_layout
+
+\begin_layout Section
+Conclusions
+\end_layout
+
+\begin_layout Enumerate
+User flight control can be appropriately modelled as a proportional gain
+ with a time delay.
+\end_layout
+
+\begin_layout Enumerate
+The stability of a single unstable pole system, is compromised if a delay
+ is introduced that is greater than the time period of the pole.
+\end_layout
+
+\begin_layout Enumerate
+Similar analysis of one control system can be used to predict the behaviour
+ of another if they both have similar transfer functions.
+\end_layout
+
+\begin_layout Enumerate
+Additional considerations are required when using a PID contoller such as
+ the saturation of actuator signals that occur from limitations in reality.
+\end_layout
+
+\begin_layout Enumerate
+Ziegler-Nichols tuning rules can be used in two forms with advantages based
+ on the nature of the control system being described.
+\end_layout
+
+\begin_layout Enumerate
+Discretisation of time-delay systems can be difficult due to the interaction
+ between the sampling time and the time delay.
+\end_layout
+
+\begin_layout Enumerate
+PID controllers tuned to time delay systems in continuous time behave differentl
+y when discretised and choosing a suitable sampling time can reduce the
+ severity of such problems.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-15"
+
+\end_inset
+
+Forni F.
+ 2017, lecture notes distributed in 3F1: Signals and Systems, Lecture 9:
+ Infinite Impulse Response Filters.
+ Available from: https://www.vle.cam.ac.uk/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-16"
+
+\end_inset
+
+McManaman D.
+ 2011.
+ 
+\shape italic
+Longest Time To Balance Broom On Hand While Sitting On Couch 
+\shape default
+[Online].
+ Record Setter.
+ Available at: https://recordsetter.com/world-record/balance-broom-hand-while-sit
+ting-couch/9156.
+ [Accessed 30/11/2017].
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-18"
+
+\end_inset
+
+Ziegler, J.G.
+ and Nichols, N.B., 1942.
+ 
+\shape italic
+Optimum settings for automatic controllers
+\shape default
+.
+ trans.
+ ASME, 64(11).
+ [Accessed Online 30/11/2017]
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-17"
+
+\end_inset
+
+Visioli, A., 2010.
+ 
+\shape italic
+Control of Integral Processes with Dead Time
+\shape default
+.
+ Springer, London [Accessed Online 30/11/2017]
+\end_layout
+
+\end_body
+\end_document
