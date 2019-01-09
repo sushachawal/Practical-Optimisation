@@ -2,4 +2,4 @@ Lecture\ Notes/
 .DS_Store
 *.m~
 *.pdf
-*.idea
+.idea/
