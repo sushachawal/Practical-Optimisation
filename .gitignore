@@ -3,3 +3,4 @@ Lecture\ Notes/
 *.m~
 *.pdf
 **/.idea/
+__pycache__

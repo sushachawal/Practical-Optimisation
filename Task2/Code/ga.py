@@ -1,22 +1,57 @@
 import numpy as np
+from functionplt import schwefel
+from time import time
+import numba
 
 
-def ga(objfunc, n, lb, ub, startseeds):
-    pop_size = 20
+def ga(objfunc, n, lb, ub, startseeds = None):
+    pop_size = 100
     pop = np.random.rand(n, pop_size)
-    pop = np.dot((ub-lb), pop) + lb
-    pass
+    pop = pop * (ub - lb) + lb
+    funcs = objfunc(pop)
+    order = funcs.argsort()
+    nis = np.random.standard_normal((n, n))
+    nis = (nis + nis.T) / 2
+    n0 = np.random.standard_normal()
+    covars = nis
+    iter = 0
+    tol = 1e-3
+    p = 0.5
+    mu = max(pop.shape[1]//7, 2)
+    results = []
+    populations = []
+    functions = []
+    while(abs(funcs[order[-1]] - funcs[order[0]]) > tol):
+        pop = breed(pop[:, order[0:mu]], pop_size)
+        mask = np.random.choice(a=[False, True], size=pop_size, p=[p, 1-p])
+        mutate_pop(pop, mask, covars, n0, nis, ub, lb)
+        pop = pop[:, np.logical_and(pop >= lb, pop <= ub).all(axis=0)]
+        funcs = objfunc(pop)
+        order = funcs.argsort()
+        if (iter % 10 == 0):
+            populations.append(pop)
+            functions.append(funcs)
+        iter += 1
+        if(iter > 10000):
+            print("Max Iterations reached!")
+            break
+    populations.append(pop)
+    functions.append(funcs)
+    results.append(populations)
+    results.append(results)
+    results.append(iter)
+    return results
 
 
-def mutate_pop(population, varmat, nzero, ns, ub, lb):
+def mutate_pop(population, mask, varmat, nzero, ns, ub, lb):
     mutate_covariances(varmat, nzero, ns, ub, lb)
-    mean = np.zeros(np.size(varmat, 1))
-    for i in range(0, np.size(pop, 1)):
+    mean = np.zeros(np.shape(varmat)[1])
+    for i in (i for i in range(np.size(population, 1)) if mask[i] == True):
         population[:, i] += np.random.multivariate_normal(mean, varmat)
 
 
 def mutate_covariances(vars, n0, ns, ub, lb):
-    n = np.size(ns, 0)
+    n = ns.shape[0]
     alphas = np.zeros((n, n))
     for j in range(0, n - 1):
         for i in range(j + 1, n):
@@ -33,21 +68,26 @@ def mutate_covariances(vars, n0, ns, ub, lb):
                 0.5 * (vars[i, i] ** 2 - vars[j, j] ** 2) * np.tan(2. * alphas[i, j])
     assert np.allclose(vars, vars.T, atol=1e-8), "Asymmetric covariance matrix generated!"
 
-def breed():
-    pass
-
+@numba.njit
+def breed(parents, num_child):
+    size = parents.shape[1]
+    n = parents.shape[0]
+    children = np.zeros((n,num_child))
+    for j in range(0, num_child):
+        for i in range(0,n):
+            children[i,j] = parents[i, np.random.randint(size)]
+    return children
 
 if __name__ == "__main__":
-    ub = np.full((5,1), 500)
-    lb = np.full((5,1), -500)
-    n = 5
-    pop = np.random.rand(n, 4)
-    pop = pop*(ub-lb) + lb
-    nis = np.random.standard_normal((n, n))
-    nis = (nis + nis.T) / 2
-    n0 = np.random.standard_normal()
-    covars = nis
-    for i in range(0, 20):
-        mutate_pop(pop, covars, n0, nis, ub, lb)
-        print("pop after %d mutation:" % (i + 1))
-        print(pop)
+    n = 2
+    ub = np.full((n,1), 500)
+    lb = np.full((n,1), -500)
+    times = []
+    for i in range(50):
+        start = time()
+        results = ga(schwefel, n, lb, ub)
+        end = time()
+        times.append(end-start)
+        np.save('results%d.npy' % i, results)
+        print("Time elapsed is: ", end-start)
+    np.save(times)
