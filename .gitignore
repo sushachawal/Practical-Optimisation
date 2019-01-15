@@ -4,3 +4,4 @@ Lecture\ Notes/
 *.pdf
 **/.idea/
 __pycache__
+*.npy
