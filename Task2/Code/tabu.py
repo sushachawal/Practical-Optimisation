@@ -2,8 +2,6 @@ import numpy as np
 from functionplt import schwefel
 from collections import deque
 from time import time
-import matplotlib.pyplot as plt
-import os
 
 class grid:
     def __init__(self, ub, lb, K):
@@ -34,7 +32,7 @@ class grid:
         return gen_sample(self.n, upper, lower)
 
 
-def tabu(objfunc, n, lb, ub, least_sampled, tolerance = 1e-8, SI=10, SD=15, SSR=25, N = 5, M = 10, K = 10):
+def tabu(objfunc, n, lb, ub, least_sampled=5, tolerance = 1e-8, SI=10, SD=15, SSR=25, N = 5, M = 10, K = 5):
     assert((ub>lb).any()), "ub value smaller than lb value!"
     results = []
     base_point = shotgun(objfunc, n, lb, ub, 10)
@@ -148,34 +146,6 @@ if __name__ == "__main__":
     ub = np.full((n, 1), 500)
     lb = np.full((n, 1), -500)
 
-    # # os.mkdir('tabu_results')
-    # # K_vals = [10, 20, 50, 100, 200, 500]
-    # # for K in K_vals:
-    # #     os.mkdir('tabu_results/Kis%d' % K)
-    # #     times = []
-    # #     for i in range(50):
-    # #         print("Running: K = %d, i = %d" % (K, i))
-    # #         start = time()
-    # #         results = tabu(schwefel, n, lb, ub, K//2, SI = 10, SD=15, SSR=25, N = 5, K=K, M = 10)
-    # #         end = time()
-    # #         times.append(end-start)
-    # #         np.save('tabu_results/Kis%d/results%d.npy' % (K,i), results)
-    # #     np.save('tabu_results/Kis%d/time.npy' % K, times)
-    #
-    #
-    # tols = [1, 0.5, 0.25, 1e-1, 1e-2, 1e-3]
-    # for num, tol in enumerate(tols):
-    #     os.mkdir('tabu_results/tolis%d' % num)
-    #     times = []
-    #     for i in range(50):
-    #         print("Running: tol = %d, i = %d" % (num, i))
-    #         start = time()
-    #         results = tabu(schwefel, n, lb, ub, 5,tolerance=tol, SI=10, SD=15, SSR=25, N=5, K=10, M=10)
-    #         end = time()
-    #         times.append(end - start)
-    #         np.save('tabu_results/tolis%d/results%d.npy' % (num, i), results)
-    #     np.save('tabu_results/tolis%d/time.npy' % num, times)
-    #
     times = []
     best_funcs = []
     for i in range(100):
@@ -190,13 +160,3 @@ if __name__ == "__main__":
     print(np.std(np.asarray(times)))
     print(np.mean(np.asarray(best_funcs)))
     print(np.std(np.asarray(best_funcs)))
-
-    # X, Y = np.mgrid[-600:600:50j, -600:600:50j]
-    # Z = -np.multiply(X, np.sin(np.sqrt(np.abs(X)))) - \
-    #     np.multiply(Y, np.sin(np.sqrt(np.abs(Y))))
-    # fig = plt.figure()
-    # ax = fig.add_subplot(111)
-    # ax.contour(X, Y, Z, cmap="autumn_r", linestyles="solid")
-    # ax.scatter(results[0][0, :], results[0][1, :], c='b', marker='o')
-
-    # plt.show()

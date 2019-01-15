@@ -508,6 +508,16 @@ The Tabu Search is mainly used as a comparison against the Evolution Strategy
  is investigated.
 \end_layout
 
+\begin_layout Subsection
+Comparison
+\end_layout
+
+\begin_layout Standard
+The comparison of the two algorithms is found by running each algorithm
+ for 100 cycles.
+ The parameters used in these can be found in the defautls
+\end_layout
+
 \begin_layout Section
 Results
 \end_layout
@@ -2668,7 +2678,14 @@ status collapsed
 
 \begin_layout Plain Layout
 Contour plots showing the points evaluated by the Tabu search for varying
- values of grid size
+ values of grid size 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tabucontour"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2690,6 +2707,204 @@ Comparison of TS and ES
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Type of algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{time}}/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{time}}/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{schwefel}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{schwefel}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Evolution Strategy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.75
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.89
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-1998
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83.5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tabu Search
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.99
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.592
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-1770
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+81.8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Table showing the overall performance of the two algorithms 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Comparison"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -2861,7 +3076,33 @@ Tabu Search
 \begin_layout Standard
 As mentioned previously, the Tabu search is mainly intended as a comparison
  with the ES but nevertherless, variation of the grid size was investigated.
- The contour plots show how the 
+ The contour plots in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tabucontour"
+
+\end_inset
+
+ show how the tabu search uses gradient descent in the local search as well
+ as how search diversification aims to explore the whole space.
+ With a large grid size, the search actually becomes more focussed! Due
+ to each grid space becoming so small and the nature of selecting some number
+ of the least sampled spaces, the TS progresses by systematically choosing
+ grid spaces as in the lower two contour plots.
+ For smaller grid sizes the Tabu Search essentially becomes a shotgun search
+ with some gradient descent.
+ It is also interesting to note that a choice of grid size so that the sample
+ spaces are roughly the size of the hills and troughs in the function will
+ work with a TS however this is an issue when the order of magnitudes of
+ the hills and troughs themselves vary across the function surface.
+\end_layout
+
+\begin_layout Subsection
+Comparison of ES and TS
+\end_layout
+
+\begin_layout Standard
+Table 
 \end_layout
 
 \begin_layout Section

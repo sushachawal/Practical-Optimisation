@@ -4,7 +4,7 @@ from time import time
 import numba
 import os
 
-def ga(objfunc, n, lb, ub, p, pop_size):
+def ga(objfunc, n, lb, ub, p=0.5, pop_size=100):
     # Generate a random population within the bounds
     pop = np.random.rand(n, pop_size)
     pop = pop * (ub - lb) + lb
@@ -116,35 +116,10 @@ if __name__ == "__main__":
     ub = np.full((n,1), 500)
     lb = np.full((n,1), -500)
 
-
-    # os.mkdir('varyp')
-    # for p_mut in range(10):
-    #     times = []
-    #     os.mkdir('varyp/pis%d' % p_mut)
-    #     for i in range(50):
-    #         start = time()
-    #         results = ga(schwefel, n, lb, ub, p_mut/10, 100)
-    #         end = time()
-    #         times.append(end-start)
-    #         np.save('varyp/pis%d/results%d.npy' % (p_mut, i), results)
-    #         print("Time elapsed is: ", end-start)
-    #     np.save('varyp/pis%d/Times.npy' % p_mut,times)
-    # os.mkdir('varypop')
-    # for pop_size in [5, 10, 25, 50, 100]:
-    #     times = []
-    #     os.mkdir('varypop/popis%d' % pop_size)
-    #     for i in range(50):
-    #         start = time()
-    #         results = ga(schwefel, n, lb, ub, 0.5, pop_size)
-    #         end = time()
-    #         times.append(end-start)
-    #         np.save('varypop/popis%d/results%d.npy' % (pop_size, i), results)
-    #         print("Time elapsed is: ", end-start)
-    #     np.save('varypop/popis%d/Times.npy' % pop_size,times)
-
     times = []
     best_funcs = []
     for i in range(100):
+        print('Running process %d' % i)
         start = time()
         results = ga(schwefel, n, lb, ub, 0.5, 100)
         end = time()
