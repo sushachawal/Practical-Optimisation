@@ -146,21 +146,22 @@ height "0.5mm"
 \end_layout
 
 \begin_layout Abstract
-Control systems are important all over Engineering, from the inverted pendulum
- to regulating levels during drug administration.
- These systems are often difficult to measure without uncertainty so methods
- must be developed to understand their behaviour as well as being able to
- control them to a desired result.
- In this experiment, Control Theory is investigated in the context of flight
- control through a flight simulator software in MATLAB.
- Systems are linearised and transfer funtions are modelled using techniques
- such as Nyquist diagrams and Bode plots.
- The varied behaviours of different transfer functions are evaluated.
- A technique is developed to model the user as a controller and then effective
- PID control is investigated using Ziegler-Nichols tuning rules.
- Various themes of control are explored including the discretisation, unstable
- poles as well as a comparison of parametric and non-parametric Ziegler-Nichols
- tuning rules.
+Most functions that appear in real Engineering problems can be difficult
+ to optimise over since they have several local maxima/minima as well as
+ discontinuities.
+ In these cases a more pragmatic approach is required with algorithms being
+ developed based on natural phenomenon as well as those based on the geometry
+ of difficult function surfaces.
+ This investigation compares an Evolution Strategy, ES with a Tabu Search,
+ TS on the Schwefel function.
+ Both algorithms are coded up from scratch in Python and complete code listings
+ are provided.
+ The effect of the variation of mutation probabilities and population size
+ for the ES and sample grid size used for search diversification in TS is
+ also investigated.
+ An ES is seen to be the better performer however the choice of algorithm
+ is found to be somewhat subjective and this is discussed further.
+ 
 \begin_inset Newpage pagebreak
 \end_inset
 
@@ -204,6 +205,19 @@ Investigate the effect of the coarseness of the sampling space in search
 
 \begin_layout Section
 Experimental Work
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+All code written for each of the optimisation functions is included in the
+ Appendix.
+ Code used to generate plots is ommitted.
+\end_layout
+
+\begin_layout Standard
+Each algorithm has inequality constrainsts which keep each control variable
+ between -500 and 500.
 \end_layout
 
 \begin_layout Subsection
@@ -515,7 +529,8 @@ Comparison
 \begin_layout Standard
 The comparison of the two algorithms is found by running each algorithm
  for 100 cycles.
- The parameters used in these can be found in the defautls
+ The parameters used in these can be found in the default function parameters
+ in the code listings.
 \end_layout
 
 \begin_layout Section
@@ -3103,6 +3118,29 @@ Comparison of ES and TS
 
 \begin_layout Standard
 Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison"
+
+\end_inset
+
+ shows the performance of the two algorithms.
+ On average the Evolution Strategy outperforms the Tabu Search since it
+ achieves a lower mean objective value without overlapping standard deviations
+ and a lower average time.
+ This is due to the Tabu Search struggling with the Schwefel function which
+ has so many local minima and local maxima.
+ However, the standard deviation for runtime is huge with the Evolution
+ Strategy and this is likely due to convergence issues as discussed previously.
+ With further tweaking this can likely be improved meaning that the ES is
+ overall the better optimisation algorithm to use on the Schwefel function.
+ However, these results do show that depending on the relative sensitivity
+ of the problem to time or achieving a smaller objective function, there
+ could be a case made to use a TS.
+ The standard deviation in time is small so if the algorithm must consistently
+ run within a limited time (such as realtime applications in automotives
+ or plane) but is less sensitive to the objective function value then a
+ TS could be the better option.
 \end_layout
 
 \begin_layout Section
@@ -3110,39 +3148,32 @@ Conclusions
 \end_layout
 
 \begin_layout Enumerate
-User flight control can be appropriately modelled as a proportional gain
- with a time delay.
+Population size and mutation probability in an ES work in tandem, working
+ on the objective function and the computation time respectively.
 \end_layout
 
 \begin_layout Enumerate
-The stability of a single unstable pole system, is compromised if a delay
- is introduced that is greater than the time period of the pole.
+Tabu Search struggles with functions containing many local minima and maxima
+ however if a search diversification grid in the order of these maxima and
+ minima is chosen then the TS can perform better
 \end_layout
 
 \begin_layout Enumerate
-Similar analysis of one control system can be used to predict the behaviour
- of another if they both have similar transfer functions.
+Overall an ES is better suited to optimising the Schwefel function compared
+ to a TS
 \end_layout
 
 \begin_layout Enumerate
-Additional considerations are required when using a PID contoller such as
- the saturation of actuator signals that occur from limitations in reality.
+The choice of parameters is somewhat objective since a particular configuration
+ does improve time and objective function values.
+ However the choice is pragmatic depending on the nature of the problem
+ that is being solved
 \end_layout
 
 \begin_layout Enumerate
-Ziegler-Nichols tuning rules can be used in two forms with advantages based
- on the nature of the control system being described.
-\end_layout
-
-\begin_layout Enumerate
-Discretisation of time-delay systems can be difficult due to the interaction
- between the sampling time and the time delay.
-\end_layout
-
-\begin_layout Enumerate
-PID controllers tuned to time delay systems in continuous time behave differentl
-y when discretised and choosing a suitable sampling time can reduce the
- severity of such problems.
+The choice of optimisation algorithm on a particular problem is largely
+ pragmatic and it is wise to test different algorithms and evaluate their
+ relative merits before selecting one.
 \end_layout
 
 \begin_layout Bibliography

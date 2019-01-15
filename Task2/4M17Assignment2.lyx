@@ -146,21 +146,22 @@ height "0.5mm"
 \end_layout
 
 \begin_layout Abstract
-Control systems are important all over Engineering, from the inverted pendulum
- to regulating levels during drug administration.
- These systems are often difficult to measure without uncertainty so methods
- must be developed to understand their behaviour as well as being able to
- control them to a desired result.
- In this experiment, Control Theory is investigated in the context of flight
- control through a flight simulator software in MATLAB.
- Systems are linearised and transfer funtions are modelled using techniques
- such as Nyquist diagrams and Bode plots.
- The varied behaviours of different transfer functions are evaluated.
- A technique is developed to model the user as a controller and then effective
- PID control is investigated using Ziegler-Nichols tuning rules.
- Various themes of control are explored including the discretisation, unstable
- poles as well as a comparison of parametric and non-parametric Ziegler-Nichols
- tuning rules.
+Most functions that appear in real Engineering problems can be difficult
+ to optimise over since they have several local maxima/minima as well as
+ discontinuities.
+ In these cases a more pragmatic approach is required with algorithms being
+ developed based on natural phenomenon as well as those based on the geometry
+ of difficult function surfaces.
+ This investigation compares an Evolution Strategy, ES with a Tabu Search,
+ TS on the Schwefel function.
+ Both algorithms are coded up from scratch in Python and complete code listings
+ are provided.
+ The effect of the variation of mutation probabilities and population size
+ for the ES and sample grid size used for search diversification in TS is
+ also investigated.
+ An ES is seen to be the better performer however the choice of algorithm
+ is found to be somewhat subjective and this is discussed further.
+ 
 \begin_inset Newpage pagebreak
 \end_inset
 
@@ -179,6 +180,10 @@ This experiment aims to investigate the performance of stochastic optimisation
 \end_layout
 
 \begin_layout Enumerate
+Implement both algorithms effectively in Python from scratch
+\end_layout
+
+\begin_layout Enumerate
 Compare the advantages and disadvantages of using an Evolution Strategy
  against a Tabu Search
 \end_layout
@@ -193,8 +198,26 @@ Investigate the effect of varying the population size per generation on
  the performance of an ES
 \end_layout
 
+\begin_layout Enumerate
+Investigate the effect of the coarseness of the sampling space in search
+ diversification on the performance of a Tabu Search
+\end_layout
+
 \begin_layout Section
 Experimental Work
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+All code written for each of the optimisation functions is included in the
+ Appendix.
+ Code used to generate plots is ommitted.
+\end_layout
+
+\begin_layout Standard
+Each algorithm has inequality constrainsts which keep each control variable
+ between -500 and 500.
 \end_layout
 
 \begin_layout Subsection
@@ -480,12 +503,47 @@ If after
  is decreased and a local search is continued.
 \end_layout
 
+\begin_layout Enumerate
+
+\series bold
+The final solution: 
+\series default
+The final value of control parameters accepted as a solution is the value
+ that gives the best objective function as used in the search intensification
+ archive.
+\end_layout
+
+\begin_layout Standard
+The Tabu Search is mainly used as a comparison against the Evolution Strategy
+ and therefore only the coarseness of the sampling grid, 
+\begin_inset Formula $K$
+\end_inset
+
+ is investigated.
+\end_layout
+
+\begin_layout Subsection
+Comparison
+\end_layout
+
+\begin_layout Standard
+The comparison of the two algorithms is found by running each algorithm
+ for 100 cycles.
+ The parameters used in these can be found in the default function parameters
+ in the code listings.
+\end_layout
+
 \begin_layout Section
 Results
 \end_layout
 
 \begin_layout Subsection
 Evolution Strategy
+\end_layout
+
+\begin_layout Standard
+All tables and graphs show performance on the 5D Schwefel function.
+ Only the contour plots show performance on the 2D Schwefel function.
 \end_layout
 
 \begin_layout Standard
@@ -2043,6 +2101,828 @@ name "fig:convgraph"
 
 \end_layout
 
+\begin_layout Subsection
+Tabu Search
+\end_layout
+
+\begin_layout Standard
+The results shown here are for the 2D Schwefel function since a larger grid
+ size takes a huge amount of computing time for the 5D Schwefel function.
+ Performance times for the 5D function were collected and will be used to
+ compare with the ES.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{iterations}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{iterations}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{schwefel}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{schwefel}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{time}}/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{time}}/ms$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-837
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.28
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.202
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-833
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0771
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-620
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.79
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.445
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-621
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.97
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.482
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-621
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.507
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-621
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.88
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.452
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Table showing the effect of varying the grid size on various performance
+ parameters.
+ Subscript schwefel refers to the value of the objective function.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:GridSize"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Graphs/TabuGridSize.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph showing the variations of the number of iterations, best objective
+ function values and time taken on grid size
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:varpgraph-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Graphs/TabuContours.png
+	scale 60
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Contour plots showing the points evaluated by the Tabu search for varying
+ values of grid size 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tabucontour"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Comparison of TS and ES
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Type of algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{time}}/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{time}}/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu_{\textrm{schwefel}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{\textrm{schwefel}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Evolution Strategy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.75
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.89
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-1998
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83.5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tabu Search
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.99
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.592
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-1770
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+81.8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Table showing the overall performance of the two algorithms 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Comparison"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Discussion
 \end_layout
@@ -2177,7 +3057,8 @@ A large population number but lower mutation probability to ensure a faster
 There is another tradeoff to be possibly considered here and that is space
  versus time.
  The former method will not require storing large population vectors so
- will be less computationally expensive in space.
+ will be less computationally expensive in space especially as the number
+ of control variables increases.
  However, the convergence will be slow so these settings will be computationally
  expensive in time.
  This eludes to ideas in Wolpert, 1997 
@@ -2197,8 +3078,69 @@ key "key-4"
 
 which talks about different algorithms having different merits for different
  problems and how a universal optimiser does not really exist.
- The choice must be made specific to the problem and the computational constrain
+ In this case, each particular configuration of the ES has different merits
+ over each other and it is hard to say which is better completely objectively:
+ the choice must be made specific to the problem and the computational constrain
 ts present.
+\end_layout
+
+\begin_layout Subsection
+Tabu Search
+\end_layout
+
+\begin_layout Standard
+As mentioned previously, the Tabu search is mainly intended as a comparison
+ with the ES but nevertherless, variation of the grid size was investigated.
+ The contour plots in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tabucontour"
+
+\end_inset
+
+ show how the tabu search uses gradient descent in the local search as well
+ as how search diversification aims to explore the whole space.
+ With a large grid size, the search actually becomes more focussed! Due
+ to each grid space becoming so small and the nature of selecting some number
+ of the least sampled spaces, the TS progresses by systematically choosing
+ grid spaces as in the lower two contour plots.
+ For smaller grid sizes the Tabu Search essentially becomes a shotgun search
+ with some gradient descent.
+ It is also interesting to note that a choice of grid size so that the sample
+ spaces are roughly the size of the hills and troughs in the function will
+ work with a TS however this is an issue when the order of magnitudes of
+ the hills and troughs themselves vary across the function surface.
+\end_layout
+
+\begin_layout Subsection
+Comparison of ES and TS
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison"
+
+\end_inset
+
+ shows the performance of the two algorithms.
+ On average the Evolution Strategy outperforms the Tabu Search since it
+ achieves a lower mean objective value without overlapping standard deviations
+ and a lower average time.
+ This is due to the Tabu Search struggling with the Schwefel function which
+ has so many local minima and local maxima.
+ However, the standard deviation for runtime is huge with the Evolution
+ Strategy and this is likely due to convergence issues as discussed previously.
+ With further tweaking this can likely be improved meaning that the ES is
+ overall the better optimisation algorithm to use on the Schwefel function.
+ However, these results do show that depending on the relative sensitivity
+ of the problem to time or achieving a smaller objective function, there
+ could be a case made to use a TS.
+ The standard deviation in time is small so if the algorithm must consistently
+ run within a limited time (such as realtime applications in systems within
+ automotives or planes) but is less sensitive to the objective function
+ value then a TS could be the better option.
 \end_layout
 
 \begin_layout Section
@@ -2206,39 +3148,58 @@ Conclusions
 \end_layout
 
 \begin_layout Enumerate
-User flight control can be appropriately modelled as a proportional gain
- with a time delay.
+Population size and mutation probability in an ES work in tandem, working
+ on the objective function and the computation time respectively.
 \end_layout
 
 \begin_layout Enumerate
-The stability of a single unstable pole system, is compromised if a delay
- is introduced that is greater than the time period of the pole.
+Tabu Search struggles with functions containing many local minima and maxima
+ however if a search diversification grid in the order of these maxima and
+ minima is chosen then the TS can perform better
 \end_layout
 
 \begin_layout Enumerate
-Similar analysis of one control system can be used to predict the behaviour
- of another if they both have similar transfer functions.
+Overall an ES is better suited to optimising the Schwefel function compared
+ to a TS
 \end_layout
 
 \begin_layout Enumerate
-Additional considerations are required when using a PID contoller such as
- the saturation of actuator signals that occur from limitations in reality.
+The choice of parameters is somewhat objective since a particular configuration
+ does improve time and objective function values.
+ However the choice is pragmatic depending on the nature of the problem
+ that is being solved
 \end_layout
 
 \begin_layout Enumerate
-Ziegler-Nichols tuning rules can be used in two forms with advantages based
- on the nature of the control system being described.
+The choice of optimisation algorithm on a particular problem is largely
+ pragmatic and it is wise to test different algorithms and evaluate their
+ relative merits before selecting one.
 \end_layout
 
-\begin_layout Enumerate
-Discretisation of time-delay systems can be difficult due to the interaction
- between the sampling time and the time delay.
+\begin_layout Subsection*
+Appendix: Program Listings
 \end_layout
 
-\begin_layout Enumerate
-PID controllers tuned to time delay systems in continuous time behave differentl
-y when discretised and choosing a suitable sampling time can reduce the
- severity of such problems.
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "Code/ga.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python,caption={Code listing for the Evolution Strategy}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "Code/tabu.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python,caption={Code listing for the Tabu Search}"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography

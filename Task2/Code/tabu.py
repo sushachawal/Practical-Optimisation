@@ -1,7 +1,5 @@
 import numpy as np
-from functionplt import schwefel
 from collections import deque
-from time import time
 
 class grid:
     def __init__(self, ub, lb, K):
@@ -32,7 +30,8 @@ class grid:
         return gen_sample(self.n, upper, lower)
 
 
-def tabu(objfunc, n, lb, ub, least_sampled=5, tolerance = 1e-8, SI=10, SD=15, SSR=25, N = 5, M = 10, K = 5):
+def tabu(objfunc, n, lb, ub, least_sampled=5, tolerance = 1e-8,
+         SI=10, SD=15, SSR=25, N = 5, M = 10, K = 5):
     assert((ub>lb).any()), "ub value smaller than lb value!"
     results = []
     base_point = shotgun(objfunc, n, lb, ub, 10)
@@ -139,24 +138,3 @@ def shotgun(objfunc, n, lb, ub, ntrials):
 
 def gen_sample(n, ub, lb):
     return np.random.rand(n, 1) * (ub - lb) + lb
-
-
-if __name__ == "__main__":
-    n = 5
-    ub = np.full((n, 1), 500)
-    lb = np.full((n, 1), -500)
-
-    times = []
-    best_funcs = []
-    for i in range(100):
-        start = time()
-        results = tabu(schwefel, n, lb, ub, 5, SI=10, SD=15, SSR=25, K=5)
-        end = time()
-        times.append(end-start)
-        best_funcs.append(results[2])
-    np.save('TabuTimes.npy', times)
-    np.save('TabuBestFuncs.npy', best_funcs)
-    print(np.mean(np.asarray(times)))
-    print(np.std(np.asarray(times)))
-    print(np.mean(np.asarray(best_funcs)))
-    print(np.std(np.asarray(best_funcs)))

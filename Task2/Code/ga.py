@@ -1,8 +1,5 @@
 import numpy as np
-from functionplt import schwefel
-from time import time
 import numba
-import os
 
 def ga(objfunc, n, lb, ub, p=0.5, pop_size=100):
     # Generate a random population within the bounds
@@ -110,24 +107,3 @@ def breed(parents, num_child):
         for i in range(0,n):
             children[i,j] = parents[i, np.random.randint(size)]
     return children
-
-if __name__ == "__main__":
-    n = 5
-    ub = np.full((n,1), 500)
-    lb = np.full((n,1), -500)
-
-    times = []
-    best_funcs = []
-    for i in range(100):
-        print('Running process %d' % i)
-        start = time()
-        results = ga(schwefel, n, lb, ub, 0.5, 100)
-        end = time()
-        times.append(end - start)
-        best_funcs.append(results[1][-1][0])
-    np.save('GATimes.npy', times)
-    np.save('GABestFuncs.npy', best_funcs)
-    print(np.mean(np.asarray(times)))
-    print(np.std(np.asarray(times)))
-    print(np.mean(np.asarray(best_funcs)))
-    print(np.std(np.asarray(best_funcs)))
