@@ -3176,8 +3176,8 @@ The choice of optimisation algorithm on a particular problem is largely
  relative merits before selecting one.
 \end_layout
 
-\begin_layout Part*
-Appendix
+\begin_layout Subsection*
+Appendix: Program Listings
 \end_layout
 
 \begin_layout Standard
@@ -3185,6 +3185,17 @@ Appendix
 LatexCommand lstinputlisting
 filename "Code/ga.py"
 lstparams "breaklines=true,captionpos=b,frame=tb,language=Python,caption={Code listing for the Evolution Strategy}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "Code/tabu.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python,caption={Code listing for the Tabu Search}"
 
 \end_inset
 

@@ -5,3 +5,4 @@ Lecture\ Notes/
 **/.idea/
 __pycache__
 *.npy
+*.lyx*

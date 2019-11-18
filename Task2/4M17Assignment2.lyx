@@ -212,11 +212,11 @@ Experimental Work
 \series bold
 All code written for each of the optimisation functions is included in the
  Appendix.
- Code used to generate plots is ommitted.
+ Code used to generate plots is omitted.
 \end_layout
 
 \begin_layout Standard
-Each algorithm has inequality constrainsts which keep each control variable
+Each algorithm has inequality constraints which keep each control variable
  between -500 and 500.
 \end_layout
 
@@ -265,7 +265,7 @@ Breed from the best
 \begin_inset Formula $\mu$
 \end_inset
 
- parents with probabilty 
+ parents with probability 
 \begin_inset Formula $\frac{1}{\mu}$
 \end_inset
 
@@ -3090,7 +3090,7 @@ Tabu Search
 
 \begin_layout Standard
 As mentioned previously, the Tabu search is mainly intended as a comparison
- with the ES but nevertherless, variation of the grid size was investigated.
+ with the ES but nevertheless, variation of the grid size was investigated.
  The contour plots in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3159,7 +3159,7 @@ Tabu Search struggles with functions containing many local minima and maxima
 \end_layout
 
 \begin_layout Enumerate
-Overall an ES is better suited to optimising the Schwefel function compared
+Overall an ES is better suited to optimizing the Schwefel function compared
  to a TS
 \end_layout
 
@@ -3178,6 +3178,17 @@ The choice of optimisation algorithm on a particular problem is largely
 
 \begin_layout Subsection*
 Appendix: Program Listings
+\end_layout
+
+\begin_layout Standard
+Code can also be found at: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/sushachawal/OptimisationAlgorithms"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
